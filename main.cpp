@@ -8,7 +8,7 @@
 const double t = 1.618034;
 
 double get_func_val(double x) {
-    return ((1 - x) * (1 - x) + std::exp(x));
+    return (((1 - x) * (1 - x)) + std::exp(x));
 }
 void passive_search(double a, double b, double e) {
     std::cout << "Passive search:\n";
@@ -32,17 +32,18 @@ void passive_search(double a, double b, double e) {
 
 std::pair<double, double> golden_section_search_alg(double a, double b, double x1, double y1, double e) {
     if (b - a < e) {
-        return std::make_pair(((a + b) / 2), e);
+        return std::make_pair(((a + b) / 2), (b - a) / 2);
     } else {
         double x2 = a + b - x1;
+        double y2 = get_func_val(x2);
         if (x2 < x1) {
             std::swap(x1, x2);
+            std::swap(y1, y2);
         }
-        double y1 = get_func_val(x1);
-        double y2 = get_func_val(x2);
+
         std::cout << "a = " << std::setw(8) << a << std::setw(8) << "b = " << std::setw(8) << b <<
         std::setw(8) << "l = " << std::setw(8) << b - a << std::setw(12) << "f(x1) = " << std::setw(8) <<
-        std::setw(8) << y1 << std::setw(12) << "f(x2) = " << std::setw(8) << y2 << "\n";
+        std::setw(8) << y1 << std::setw(12) << "f(x2) = " << std::setw(8) << y2 << std::setw(8) << "e = " << std::setw(8) << (b - a) / 2 << "\n";
         if (y1 < y2) {
             return golden_section_search_alg(a, x2, x1, y1, e);
         } else {
@@ -58,8 +59,10 @@ void golden_section_search(double a, double b, double e) {
     double x1 = a + (1 - 1 / t) * b;
     double x2 = a + b / t;
     double y1 = get_func_val(x1);
-
     double y2 = get_func_val(x2);
+    std::cout << "a = " << std::setw(8) << a << std::setw(8) << "b = " << std::setw(8) << b <<
+              std::setw(8) << "l = " << std::setw(8) << b - a << std::setw(12) << "f(x1) = " << std::setw(8) <<
+              std::setw(8) << y1 << std::setw(12) << "f(x2) = " << std::setw(8) << y2 << "\n";
     if (y1 < y2) {
         rez = golden_section_search_alg(a, x2, x1, y1, e);
     } else {
