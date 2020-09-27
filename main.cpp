@@ -18,13 +18,13 @@ void passive_search(double a, double b, double e) {
         ++N;
         eps = (b - a) / (N + 1);
         std::map<double, double> func_values; // key -> f(x) | value -> x
-        for (int k = 0; k < N; ++k) {
+        for (int k = 1; k <= N; ++k) {
             double x = ((b - a) / (N + 1)) * k + a;
             func_values[get_func_val(x)] = x;
         }
-        auto x = func_values.begin()->second;
+        auto min = func_values.begin()->second;
         std::cout << "N = " << std::setw(2) << N << std::setw(7) <<
-        "x = " << std::setw(8) << std::fixed << std::setprecision(5) << x << std::setw(4) << " +- " << eps << "\n";
+        "x = " << std::setw(8) << std::fixed << std::setprecision(5) << min << std::setw(4) << " +- " << eps << "\n";
     }
     return;
 }
